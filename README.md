@@ -48,3 +48,8 @@ Run app:
 ```bash
 python server.py
 ```
+
+Open app in browser:
+
+```http://localhost:8000
+```
