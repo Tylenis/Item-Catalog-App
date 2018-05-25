@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App -  delete {{context.item.name}} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col custom-section mt-2">
+            <header>
+                <h3 class="text-center py-3 delete-header">Delete "{{context.item.name}}" ?</h3>
+            </header>
+            <form action="{{url_for('DeleteItemView', item_id = context.item.id)}}" method="post">
+                <div class="form-group row text-center">
+                    <div class="col-sm-12 delete-icon">
+                        <i class="far fa-trash-alt"></i>
+                    </div>
+                    <div class="col-sm-12">
+                        <a href="{{url_for('EditItemView', item_id=context.item.id)}}" class="btn btn-secondary btn-lg">Cancel</a>
+                        <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

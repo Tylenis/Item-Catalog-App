@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title%}Catalog App{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col-sm custom-section text-center">
+            <header><h3>Sorry, we encoutered an error. Please, try again later.</h3></header>
+            <p>ERROR: {{context.msg}}</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

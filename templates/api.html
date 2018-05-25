@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App -  API {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col-12 custom-section mt-2">
+            <article class="pt-2">
+                    <header>
+                        <h4 class="text-center"><u>Item Catalog API</u></h4>
+                    </header>
+                    <h5>This API allows you:</h5>
+                    <ul>
+                        <li>
+                            <a href="#section-1" class="section-link">get client profile data</a>
+                        </li>
+                        <li>
+                            <a href="#section-2" class="section-link">delete client profile</a>
+                        </li>
+                        <li>
+                            <a href="#section-3" class="section-link">get movies list</a>
+                        </li>
+                        <li>
+                            <a href="#section-4" class="section-link">get movie data</a>
+                        </li>
+                        <li>
+                            <a href="#section-5" class="section-link">create movie record</a>
+                        </li>
+                        <li>
+                            <a href="#section-6" class="section-link">edit movie record</a>
+                        </li>
+                        <li>
+                            <a href="#section-7" class="section-link">delete movie record</a>
+                        </li>
+                    </ul>
+                    <h4>Getting starded</h4>
+                    <p class="api-subheader">In order to use thi API you must obtain a authorization token. You can do it
+                        <a href="{{url_for('UserProfileView', user_id=context.user.user_id)}}">here.</a> All requests to API endpoints must contain "Authorization" header with
+                    your authorization token.</p>
+                    <h4 id="section-1">Get user profile data</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-success">GET</span>
+                        Endpoint: http://localhost:8000/api/user/USER_EMAIL
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "user_data": {
+        "user": {
+            "email": "some@mail.com",
+            "image": "http://some_image.jpg",
+            "movies": [
+                {
+                    "categories": [
+                        "Crime",
+                        "Drama",
+                        "Mystery"
+                    ],
+                    "description": "When a murder occurs on the train he's travelling on, celebrated detective Hercule Poirot is recruited to solve the case.",
+                    "movie_id": 8,
+                    "movie_title": "Murder on the Orient Express",
+                    "poster": "https://ia.media-imdb.com/images/M/MV5BMTAxNDkxODIyMDZeQTJeQWpwZ15BbWU4MDQ2Mjg4NDIy._V1_SY1000_CR0,0,674,1000_AL_.jpg",
+                    "trailer": "https://www.youtube.com/watch?v=Mq4m3yAoW8E"
+                }, ...]
+            "user_id": 1,
+            "user_name": "some_username"
+        }
+    }
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-2">Delete user profile</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-danger">DELETE</span>
+                        Endpoint: http://localhost:8000/api/user/USER_ID
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "msg": "User successfully deleted."
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-3">Get all items in catalog</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-success">GET</span>
+                        Endpoint: http://localhost:8000/api/catalog
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "all_movies": [
+        {
+            "categories": [
+                "Sci-Fi",
+                "Action",
+                "Thriller",
+                "Adventure"
+            ],
+            "description": "A thief, who steals corporate secrets through the use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
+            "movie_id": 1,
+            "movie_title": "Inception",
+            "poster": "https://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+            "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+        },
+        ...
+    ]
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-4">Get items by category</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-success">GET</span>
+                        Endpoint: http://localhost:8000/api/catalog/CATEGORY
+                    </p>
+                    <p class="text-center api-subheader">Available categories:</p>
+                    <p class="text-center">action, adventure, animation, comedy, crime, drama, fantasy, horror,
+                         mystery, romance, sci-fi, superhero, thriller</p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "category_data": {
+        "category": "Action",
+        "category_id": 5,
+        "movies": [
+            {
+                "categories": [
+                    "Sci-Fi",
+                    "Action",
+                    "Thriller",
+                    "Adventure"
+                ],
+                "description": "A thief, who steals corporate secrets through the use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
+                "movie_id": 1,
+                "movie_title": "Inception",
+                "poster": "https://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+                "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+            },
+            ...
+        ]
+    }
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-5">Get item</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-success">GET</span>
+                        Endpoint: http://localhost:8000/api/catalog/item/ITEM_ID
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "movie_data": {
+        "categories": [
+            "Sci-Fi",
+            "Action",
+            "Thriller",
+            "Adventure"
+        ],
+        "description": "A thief, who steals corporate secrets through the use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
+        "movie_id": 1,
+        "movie_title": "Inception",
+        "poster": "https://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+        "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+    }
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-6">Create item</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-secondary">POST</span>
+                        Endpoint: http://localhost:8000/api/catalog/item
+                    </p>
+                    <p class="text-center api-subheader">Content Type: application/json</p>
+                    <p class="text-center api-subheader">Schema:</p>
+                    <pre>
+                        <code>
+                            {
+                                "name": String (min=2 max=80, required),
+                                "description": String (min=2, max=250, required),
+                                "poster": String (valid url),
+                                "trailer": String (valid url),
+                                "categories": [String, String, String...]
+                            }
+                        </code>
+                    </pre>
+                    <p class="text-center api-subheader">Available categories:</p>
+                    <p class="text-center">action, adventure, animation, comedy, crime, drama, fantasy, horror,
+                         mystery, romance, sci-fi, superhero, thriller</p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "msg": "Record created."
+}
+                        </code>
+                    </pre>
+                    <h4>Update item</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-warning">PUT</span>
+                        Endpoint: http://localhost:8000/api/catalog/item/ITEM_ID
+                    </p>
+                    <p class="text-center api-subheader">Content Type: application/json</p>
+                    <p class="text-center api-subheader">Schema:</p>
+                    <pre>
+                        <code>
+                            {
+                                "name": String (min=2 max=80),
+                                "description": String (min=2, max=250),
+                                "poster": String (valid url),
+                                "trailer": String (valid url),
+                                "categories": [String, String, String...]
+                            }
+                        </code>
+                    </pre>
+                    <p class="text-center api-subheader">Note:</p>
+                    <p class="text-center">
+                        You can update whole object, one or few attributes.
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "msg": "Record successfully edited."
+}
+                        </code>
+                    </pre>
+                    <h4 id="section-7">Delete item</h4>
+                    <p class="endpoint">
+                        Method:
+                        <span class="badge badge-danger">DELETE</span>
+                        Endpoint: http://localhost:8000/api/catalog/item/ITEM_ID
+                    </p>
+                    <p class="text-center api-subheader">Response:</p>
+                    <pre>
+                        <code>
+{
+    "msg": "Movie 'Inception' was deleted."
+)
+                        </code>
+                    </pre>
+            </article>
+        </section>
+    </div>
+</div>
+{% endblock %}

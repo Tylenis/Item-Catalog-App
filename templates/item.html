@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App - {{context.movie.name}} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col custom-section mt-2">
+            <article class="movie-card">
+                <div class="movie-card-image">
+                    <img src="{{context.movie.poster}}" class="img-fluid">
+                </div>
+                <div class="movie-card-text">
+                    <header>
+                        <h4 class="text-center"><u>{{context.movie.name}}</u></h4>
+                    </header>
+                    <p>{{context.movie.description}}</p>
+                    <a  href="{{context.movie.trailer}}" class="btn btn-primary btn-lg btn-block" target="_blank">Watch trailer</a>
+                </div>
+                <div class="movie-card-categories text-center">
+                    <h5>Categories:</h5>
+                        {% for cat in context.movie.categories%}
+                        <div>
+                            <a href="{{url_for('CategoryView', category_id=cat.id)}}" class="btn btn-outline-light my-1">{{cat.name}}</a>
+                        </div>    
+                        {% endfor %}
+                </div>
+            </article>
+            {% if context.user.user_id and context.user.user_id == context.movie.user_id %}
+            <a  href="{{url_for('EditItemView', item_id=context.movie.id)}}" class="text-center">
+                <p class="edit-movie-footer">
+                    EDIT MOVIE DETAILS <i class="far fa-edit"></i>
+                </p>
+            </a>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}

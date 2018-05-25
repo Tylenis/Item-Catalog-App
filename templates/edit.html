@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App -  edit {{context.item.name}} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col custom-section mt-2">
+            <header>
+                <h3 class="text-center py-3">Edit "{{context.item.name}}"</h3>
+            </header>
+            <form action="{{url_for('EditItemView', item_id = context.item.id)}}" method="post" id="item-edit">
+                {{ context.form.hidden_tag() }}
+                <div class="form-group row">
+                    {{ context.form.title.label(class="col-sm-3 col-form-label text-center font-weight-bold") }}
+                    <div class="col-sm-8">
+                        {{ context.form.title(class="form-control", placeholder="Title")}}
+                        {% for message in context.form.title.errors%}
+                        <p class="error text-center">{{message}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                        {{ context.form.description.label(class="col-sm-3 col-form-label text-center font-weight-bold") }}
+                        <div class="col-sm-8">
+                            {{ context.form.description(class="form-control", placeholder="Description")}}
+                            {% for message in context.form.description.errors%}
+                            <p class="error text-center">{{message}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                <div class="form-group row">
+                    {{ context.form.poster.label(class="col-sm-3 col-form-label text-center font-weight-bold") }}
+                    <div class="col-sm-8">
+                        {{ context.form.poster(class="form-control", placeholder="Poster URL")}}
+                        {% for message in context.form.poster.errors%}
+                        <p class="error text-center">{{message}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {{ context.form.trailer.label(class="col-sm-3 col-form-label text-center font-weight-bold") }}
+                    <div class="col-sm-8">
+                        {{ context.form.trailer(class="form-control", placeholder="Trailer URL")}}
+                        {% for message in context.form.trailer.errors%}
+                        <p class="error text-center">{{message}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {{ context.form.categories.label(class="col-sm-3 col-form-label text-center font-weight-bold") }}
+                    <div class="col-sm-8">
+                        {{ context.form.categories()}}
+                        {% for message in context.form.categories.errors%}
+                        <p class="error text-center">{{message}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row text-right">
+                    <div class="col-sm-11">
+                        <a href="{{url_for('ItemView', item_id=context.item.id)}}" class="btn btn-secondary btn-lg">Cancel</a>
+                        <button type="submit" class="btn btn-primary btn-lg" id="submit-button">Submit</button>
+                        <a href="{{url_for('DeleteItemView', item_id=context.item.id)}}"  class="btn btn-danger btn-lg">Delete</a>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App -  user profile {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section class="col-12 custom-section mt-2">
+            <article class="pt-2 text-center">
+                    <header>
+                        <h4 class="mb-3"><u>User profile</u></h4>
+                    </header>
+                    <img  src="{{context.user.picture}}"
+                        alt="user image" class="rounded-circle border border-white mx-auto d-block" height="70px">
+                    <p class="api-subheader mt-3"><strong>Username:</strong> {{context.user.username|toTitle}}</p>
+                    <p class="api-subheader"><strong>Email:</strong> {{context.user.email}}</p>
+                    <a class="btn btn-primary btn-lg btn-block mb-3" href="{{url_for('GenerateToken', user_id=context.user.user_id)}}" role="button">Generate API token</a>
+                    {% if context.user.API_TOKEN %}
+                    <h4 class=" mt=2">TOKEN</h4>
+                    <pre>
+                        <code>
+                            {{context.user.API_TOKEN}}
+                        </code>
+                    </pre>
+                    {% endif %}
+                    <form action="{{url_for('DeleteAccount', user_id=context.user.user_id)}}" method="POST">
+                        <button class="btn btn-danger btn-lg btn-block mb-3" type="submit">Delete my profile</button>
+                    </form>
+            </article>
+        </section>
+    </div>
+</div>
+{% endblock %}

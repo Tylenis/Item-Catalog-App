@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title%} Catalog App - {{context.category.name}} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-around no-gutters">
+        <div class="col-sm-4 mt-2">
+            <section class="custom-section">
+                <header class="section-header text-center pt-1 pb-1">
+                    <h3 id="header-large-viewport">CATEGORIES</h3>
+                    <div id="header-small-viewport">
+                        <h3>CATEGORIES</h3>
+                        <div id="show-categories">
+                            <p>Tap to view categories</p>
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                        <div id="close-categories">
+                            <p>Tap to close categories</p>
+                            <i class="fas fa-angle-up"></i>
+                        </div>
+                    </div>
+                </header>
+                <div id="myColl" class="collapse">
+                {% for category in context.categories|sort(attribute="name") %}
+                <a href="{{url_for('CategoryView', category_id=category.id)}}"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category">
+                    <h4>{{ category.name }}</h4>
+                    <span class="badge badge-secondary badge-pill">{{category.movies|length}}</span>
+                </a>
+                {% endfor %}
+            </div>
+            </section>
+        </div>
+        <div class="col-sm-7 mt-2">
+            <section class="custom-section">
+                <header class="section-header d-flex justify-content-between align-items-center px-2">
+                    <h3 class="pt-1">{{context.category.name}}</h3>
+                    {% if context.user.user_id %}
+                    <a href="{{url_for('CreateItemView', category_id=context.category.id)}}" class="movie-plus"><i class="fas fa-plus fa-lg"></i> Add</a>
+                    {% endif %}
+                </header>
+                {% for movie in context.movies %}
+                <article class="movie-article py-2 pl-2 d-flex align-items-start">
+                    <div>
+                        <img src="{{movie.poster}}" class="img-fluid poster">
+                    </div>
+                    <div>
+                        <header class="ml-2 movie-title">
+                            <h4><u>{{movie.name}}</u></h4>
+                        </header>
+                        <p class="px-2 short-description">{{movie.description|truncate(110)}}</p>
+                        <a href="{{url_for('ItemView', item_id=movie.id)}}" class="text-center more-button-container">
+                            <div class="more-button ml-2 mr-2">More</div>
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <!-- Font for Sign in button-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+
+        <!-- Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+        <!-- jQuery first, then jQuery Form Validator, then Popper.js, Bootstrap JS, Google API -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+        <script>
+            function start() {
+                gapi.load('auth2', function() {
+                    auth2 = gapi.auth2.init({
+                        client_id: '712032961572-gsoni2d9l1uqai1qn8n1lukuqtj1hvsm.apps.googleusercontent.com',
+                        redirect_uri: 'postmessage'
+                    });
+                });
+            }
+        </script>
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-light custom-navbar">
+            <a class="navbar-brand" href="{{url_for('mainView')}}"><h2 class="my-title" style="color:white;">Catalog App</h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    {% if context.user.user_id %}
+                    <li class="nav-item pt-1 right-items user-name">
+                        <img src="{{context.user.picture}}"
+                            alt="user image" class="rounded-circle border border-white mr-1" height="38px">
+                            <strong><a href="{{url_for('UserProfileView', user_id=context.user.user_id)}}" class="mr-2 user-profile-link">{{context.user.username|toTitle}}</a></strong>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item right-items">
+                        <a class="nav-link user-items-link" href="{{url_for('mainView')}}" style="color:white;">Home</a>
+                    </li>
+                    {% if context.user.user_id %}
+                    <li class="nav-item right-items">
+                        <a class="nav-link user-items-link" href="{{url_for('UserItemsView', user_id=context.user.user_id)}}" style="color:white;">My items</a>
+                    </li>
+                    <li class="nav-item right-items">
+                        <a class="nav-link user-items-link" href="{{url_for('ApiView', user_id=context.user.user_id)}}" style="color:white;">API</a>
+                    </li>
+                    <li class="nav-item login-logout-button small logout">
+                        <a class="btn btn-outline-light">Logout<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item login-logout-button large logout">
+                        <a class="btn btn-outline-light btn-lg btn-block">Logout<span class="sr-only">(current)</span></a>
+                    </li>
+                    {% else %}
+
+                    <li class="nav-item login-logout-button small">
+                        <a class="btn btn-outline-light" href="{{url_for('LoginView')}}">Login</a>
+                    </li>
+                    <li class="nav-item login-logout-button large">
+                        <a class="btn btn-outline-light btn-lg btn-block" href="{{url_for('LoginView')}}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+        <footer class="container">
+            <div class="row footer-part mt-4">
+                <section class="col">
+                    <p class="text-center pt-2">Made by Nerijus</p>
+                </section>
+            </div>
+
+        </footer>
+      
+        <!-- Categories menu visibility-->
+        <script>
+            $(document).ready(function(){
+                $('#header-small-viewport').click(function(){
+                    $('#myColl').collapse('toggle');
+                    if($('#myColl').hasClass('hidden')){
+                        $('#close-categories').show()
+                        $('#show-categories').hide()
+                        $('#myColl').addClass('unhidden')
+                        $('#myColl').removeClass('hidden')
+                    } else {
+                        $('#close-categories').hide()
+                        $('#show-categories').show()
+                        $('#myColl').addClass('hidden');
+                        $('#myColl').removeClass('unhidden')
+                    }
+                })
+                if($(window).width() < 576){
+                    $('#myColl').collapse('hide');
+                    $('#myColl').addClass('hidden')
+                    $('#myColl').removeClass('unhidden')
+                    $('#header-large-viewport').hide();
+                    $('#header-small-viewport').show();
+                } else {
+                    $('#myColl').collapse('show');
+                    $('#myColl').addClass('unhidden')
+                    $('#myColl').removeClass('hidden')
+                    $('#header-small-viewport').hide();
+                    $('#header-large-viewport').show();
+
+                }
+                $(window).resize(function(){
+                    if($( window ).width() < 576){
+                        $('#myColl').collapse('hide');
+                        $('#myColl').addClass('hidden')
+                        $('#myColl').removeClass('unhidden')
+                        $('#header-large-viewport').hide();
+                        $('#header-small-viewport').show();
+                    } else {
+                        $('#myColl').collapse('show');
+                        $('#myColl').addClass('unhidden')
+                        $('#myColl').removeClass('hidden')
+                        $('#header-large-viewport').show();
+                        $('#header-small-viewport').hide();
+                    }
+                })
+                function signInCallback(authResult) {
+                    if (authResult['code']) {
+                        // Hide the sign-in button now that the user is authorized.:
+                        $('#signinButton').attr('style', 'display: none');
+                    
+                        // Send the code to the server
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:8000/catalog/googlelogin?state={{context["CSFR_TOKEN"]}}',
+                            // `X-Requested-With` header in AJAX request,
+                            // to protect against CSRF attacks.
+                            headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            contentType: 'application/octet-stream; charset=utf-8',
+                            success: function(result) {
+                            // Handle or verify the server response.
+                                if(result){
+                                    window.location.href = '/';
+                                }
+                            },
+                            processData: false,
+                            data: authResult['code']
+                        });
+                    } else {
+                    // There was an error.
+                        console.log("There was an error!")
+                    }
+                }
+                $('#signinButton').click(function() {
+                    auth2.grantOfflineAccess().then(signInCallback);
+                });
+                $('.logout').click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:8000/catalog/googlelogout',
+                        success: function(result) {
+                            window.location.href = '/';
+                        }
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
