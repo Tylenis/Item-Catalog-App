@@ -1,6 +1,6 @@
 # Item-Catalog-App project
 
-an application that provides a list of items ( this case movies ) within a variety of categories  as well as provide a user registration and authentication system. Registered users have the ability to post, edit and delete their own items.
+an application that provides a list of items ( this case - movies ) within a variety of categories  as well as provide a user registration and authentication system. Registered users have the ability to post, edit and delete their own items.
 
 ## Prerequisites
 
@@ -8,9 +8,9 @@ an application that provides a list of items ( this case movies ) within a varie
 
 * Install virtualenv. It is a tool to create isolated Python environments. It creates an environment that has its own installation directories, that doesn’t share libraries with other virtualenv environments (and optionally doesn’t access the globally installed libraries either). This way you keep your system clean.
 
-'''bash
+```bash
 pip install virtualenv
-'''
+```
 
 * This app uses Google OAuth 2.0 client IDs authentication. You will need OAuth credentials. [Detail explanation](https://support.google.com/googleapi/answer/6158849?hl=en&ref_topic=7013279), how to obtain them. Download the client secret as a JSON data file once you have created it and rename to "client_secret.json".
 
