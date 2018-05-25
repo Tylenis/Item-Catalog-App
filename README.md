@@ -51,5 +51,6 @@ python server.py
 
 Open app in browser:
 
-```http://localhost:8000
+```bash
+http://localhost:8000
 ```
