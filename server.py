@@ -53,7 +53,7 @@ CLIENT_ID = json.loads(
 
 
 app.add_url_rule("/catalog/login", view_func=LoginView.as_view(
-    "LoginView", session, login_session)
+    "LoginView", session, login_session, client_id=CLIENT_ID)
 )
 
 

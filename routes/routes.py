@@ -19,17 +19,20 @@ from forms import CreateForm
 class TemplateView(View):
     """Template for CRUD views"""
 
-    def __init__(self, session, login_session, auth_required=False):
+    def __init__(
+        self, session, login_session, auth_required=False, client_id=None):
         """
             Args:
                 session: sqlalchemy session object.
                 login_session: flask session object.
                 auth_required: Boolean, default=False.
+                client_id: client_id
 
         """
         self.session = session
         self.login_session = login_session
         self.auth_required = auth_required
+        self.client_id = client_id
 
 # Raise error if child class does not have 'get_template_name' method
     def get_template_name(self):
@@ -86,7 +89,8 @@ class LoginView(TemplateView):
             "user": self.login_session,
             "auth_required": False,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             token = self.gen_csfr_token()

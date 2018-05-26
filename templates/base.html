@@ -26,7 +26,7 @@
             function start() {
                 gapi.load('auth2', function() {
                     auth2 = gapi.auth2.init({
-                        client_id: '712032961572-gsoni2d9l1uqai1qn8n1lukuqtj1hvsm.apps.googleusercontent.com',
+                        client_id: '{{context["client_id"]}}',
                         redirect_uri: 'postmessage'
                     });
                 });
