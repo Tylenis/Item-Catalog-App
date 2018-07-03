@@ -12,7 +12,7 @@ an application that provides a list of items ( this case - movies ) within a var
 pip install virtualenv
 ```
 
-* This app uses Google OAuth 2.0 client IDs authentication. You will need OAuth credentials. [Detail explanation](https://support.google.com/googleapi/answer/6158849?hl=en&ref_topic=7013279), how to obtain them. Download the client secret as a JSON data file once you have created it and rename to "client_secret.json".
+* This app uses Google OAuth 2.0 client IDs authentication. You will need OAuth credentials. [Detail explanation](https://support.google.com/googleapi/answer/6158849?hl=en&ref_topic=7013279), how to obtain them. Download the client secret as a JSON data file and rename it to "client_secret.json".
 
 ## Usage
 
