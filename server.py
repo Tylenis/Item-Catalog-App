@@ -121,64 +121,60 @@ app.add_url_rule(
 
 
 app.add_url_rule("/", view_func=MainView.as_view(
-    "mainView", session, login_session)
+    "mainView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/category/<int:category_id>/items",
     view_func=CategoryView.as_view(
-        "CategoryView", session, login_session)
+        "CategoryView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/item/<int:item_id>",
     view_func=ItemView.as_view(
-        "ItemView", session, login_session)
+        "ItemView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/category/<int:category_id>/create",
     view_func=CreateItemView.as_view(
-        "CreateItemView", session, login_session)
+        "CreateItemView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/user/<int:user_id>/items",
     view_func=UserItemsView.as_view(
-        "UserItemsView", session, login_session, auth_required=True)
+        "UserItemsView", session, login_session, auth_required=True, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/item/<int:item_id>/edit",
     view_func=EditItemView.as_view(
-        "EditItemView", session, login_session
-    )
+        "EditItemView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/item/<int:item_id>/delete",
     view_func=DeleteItemView.as_view(
-        "DeleteItemView", session, login_session
-    )
+        "DeleteItemView", session, login_session, client_id=CLIENT_ID)
 )
 
 
 app.add_url_rule(
     "/catalog/api/<int:user_id>", view_func=ApiView.as_view(
-        "ApiView", session, login_session
-    )
+        "ApiView", session, login_session, client_id=CLIENT_ID)
 )
 
 app.add_url_rule(
     "/user/<int:user_id>/profile", view_func=UserProfileView.as_view(
-        "UserProfileView", session, login_session
-    )
+        "UserProfileView", session, login_session, client_id=CLIENT_ID)
 )
 
 app.add_url_rule(
@@ -191,4 +187,4 @@ app.add_url_rule(
 if __name__ == "__main__":
     app.debug = True
     app.config.from_object(Config)
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=Config.PORT)

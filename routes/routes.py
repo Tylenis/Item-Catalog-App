@@ -111,7 +111,7 @@ class GoogleLogin(MethodView):
                 session: sqlalchemy session object.
                 login_session: flask session object.
                 client_secrets: path to 'client_secrets.json' file.
-                client_id: integer.
+                client_id: client_id.
 
         """
         self.session = session
@@ -466,7 +466,8 @@ class MainView(TemplateView):
         context = {
             "user": self.login_session,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             categories = self.session.query(Category).all()
@@ -490,7 +491,8 @@ class CategoryView(TemplateView):
         context = {
             "user": self.login_session,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             categories = self.session.query(Category).all()
@@ -516,7 +518,8 @@ class ItemView(TemplateView):
         context = {
             "user": self.login_session,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             movie = self.session.query(Movie).filter_by(id=item_id).one()
@@ -537,7 +540,8 @@ class UserItemsView(TemplateView):
         context = {
             "user": self.login_session,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             if user_id == self.login_session["user_id"]:
@@ -558,20 +562,23 @@ class CreateItemView(MethodView):
     """Handles GET, POST request
      for '/catalog/category/<int:category_id>/create'"""
 
-    def __init__(self, session, login_session):
+    def __init__(self, session, login_session, client_id=None):
         """
             Args:
                 session: sqlalchemy session object.
                 login_session: flask session object.
+                client_id: client_id.
         """
         self.session = session
         self.login_session = login_session
+        self.client_id = client_id
         self.form = CreateForm()
 
     def get(self, category_id):
         context = {
             "user": self.login_session,
-            "error": False
+            "error": False,
+            "client_id": self.client_id
         }
         if self.login_session.get("user_id"):
             try:
@@ -610,14 +617,16 @@ class EditItemView(MethodView):
     """Handles GET, POST request
      for '/catalog/item/<int:item_id>/edit'"""
 
-    def __init__(self, session, login_session):
+    def __init__(self, session, login_session, client_id=None):
         """
             Args:
                 session: sqlalchemy session object.
                 login_session: flask session object.
+                client_id: client_id.
         """
         self.session = session
         self.login_session = login_session
+        self.client_id = client_id
         self.form = CreateForm()
 
     def pre_fill_form(self, item):
@@ -633,7 +642,8 @@ class EditItemView(MethodView):
     def get(self, item_id):
         context = {
             "user": self.login_session,
-            "error": False
+            "error": False,
+            "client_id": self.client_id
         }
         try:
             item = self.session.query(Movie).filter_by(id=item_id).one()
@@ -680,19 +690,22 @@ class DeleteItemView(MethodView):
     """Handles GET, POST request
      for '/catalog/item/<int:item_id>/delete'"""
 
-    def __init__(self, session, login_session):
+    def __init__(self, session, login_session, client_id=None):
         """
             Args:
                 session: sqlalchemy session object.
                 login_session: flask session object.
+                client_id: client_id.
         """
         self.session = session
         self.login_session = login_session
+        self.client_id = client_id
 
     def get(self, item_id):
         context = {
             "user": self.login_session,
-            "error": False
+            "error": False,
+            "client_id": self.client_id
         }
         try:
             item = self.session.query(Movie).filter_by(id=item_id).one()
@@ -743,7 +756,8 @@ class ApiView(TemplateView):
         context = {
             "user": self.login_session,
             "error": False,
-            "redirect_to_main": False
+            "redirect_to_main": False,
+            "client_id": self.client_id
         }
         try:
             if user_id and user_id == self.login_session.get("user_id"):
